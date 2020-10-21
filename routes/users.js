@@ -76,11 +76,13 @@ const express = require("express");
 const router = express.Router();
 const db = require('../db');
 
-router.get('/', (req, res) => { //returns a list of all users
-  const results = db.query( //the query method accepts pure SQL string
+//ALL QUERIES ARE ASYNC!
+
+router.get('/', async (req, res) => { //returns a list of all users
+  const results = await db.query( //the query method accepts pure SQL string
     `SELECT * FROM users`
   );
-  return res.json(results.row);
+  return res.json(results.rows);
 })
 
 
