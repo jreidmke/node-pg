@@ -78,11 +78,15 @@ const db = require('../db');
 
 //ALL QUERIES ARE ASYNC!
 
-router.get('/', async (req, res) => { //returns a list of all users
-  const results = await db.query( //the query method accepts pure SQL string
-    `SELECT * FROM users`
-  );
-  return res.json(results.rows);
+router.get('/', async(req, res, next) => {
+  try {
+    const results = await db.query( //the query method accepts pure SQL string
+      `SELECT * FROM users`
+    );
+    return res.json(results.rows);
+  } catch (error) {
+    next(error);
+  }
 })
 
 
